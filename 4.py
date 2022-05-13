@@ -1,16 +1,18 @@
 from cv2 import COLOR_BGR2GRAY
 import numpy as np
 import cv2
-    
+import pixellib
+from pixellib.tune_bg import alter_bg
+change_bg = alter_bg()
 cap = cv2.VideoCapture('1.mp4')
 
-subtractor = cv2.createBackgroundSubtractorMOG2(history=20, varThreshold=100, detectShadows=False)
+subtractor = cv2.createBackgroundSubtractorMOG2(history=60, varThreshold=50, detectShadows=False)
 # subtractor = cv2.createBackgroundSubtractorKNN(history=120, dist2Threshold=100, detectShadows=False)
 
 while True:
     _, frame = cap.read()
     # frame = cv2.cvtColor(frame, COLOR_BGR2GRAY)
-    frame = cv2.GaussianBlur(frame, (11, 11),0)
+    frame = cv2.GaussianBlur(frame, (9, 9),0)
    
     mask = subtractor.apply(frame)
 
